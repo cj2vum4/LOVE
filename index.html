@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>與萌萌的台北兩天一夜</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background: linear-gradient(to bottom, 
+                #87CEEB 0%,     /* 天空藍 */
+                #98D8C8 30%,    /* 薄荷綠 */
+                #7BB146 60%,    /* 山林綠 */
+                #5A7F39 100%    /* 深綠 */
+            );
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* 山脈背景 */
+        .mountain-bg {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .mountain-layer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+        
+        .mountain-1 {
+            height: 60%;
+            background: linear-gradient(135deg, #2C5F2D 0%, #4A7C59 100%);
+            clip-path: polygon(
+                0 100%, 
+                0 40%, 
+                20% 25%, 
+                35% 45%, 
+                50% 20%, 
+                65% 35%, 
+                80% 30%, 
+                100% 50%, 
+                100% 100%
+            );
+            opacity: 0.3;
+        }
+        
+        .mountain-2 {
+            height: 45%;
+            background: linear-gradient(135deg, #3E7C47 0%, #5A9A65 100%);
+            clip-path: polygon(
+                0 100%, 
+                0 60%, 
+                15% 40%, 
+                30% 55%, 
+                45% 35%, 
+                60% 50%, 
+                75% 45%, 
+                90% 60%, 
+                100% 40%, 
+                100% 100%
+            );
+            opacity: 0.5;
+        }
+        
+        .mountain-3 {
+            height: 35%;
+            background: linear-gradient(135deg, #4A8B57 0%, #6BAA75 100%);
+            clip-path: polygon(
+                0 100%, 
+                0 70%, 
+                25% 50%, 
+                40% 65%, 
+                55% 45%, 
+                70% 60%, 
+                85% 55%, 
+                100% 70%, 
+                100% 100%
+            );
+            opacity: 0.7;
+        }
+        
+        /* 雲朵裝飾 */
+        .cloud {
+            position: absolute;
+            background: white;
+            border-radius: 100px;
+            opacity: 0.7;
+            animation: float-cloud 20s infinite ease-in-out;
+        }
+        
+        .cloud::before,
+        .cloud::after {
+            content: '';
+            position: absolute;
+            background: white;
+            border-radius: 100px;
+        }
+        
+        .cloud1 {
+            width: 80px;
+            height: 35px;
+            top: 20%;
+            left: 10%;
+            animation-duration: 25s;
+        }
+        
+        .cloud1::before {
+            width: 40px;
+            height: 40px;
+            top: -20px;
+            left: 10px;
+        }
+        
+        .cloud1::after {
+            width: 50px;
+            height: 30px;
+            top: -10px;
+            right: 10px;
+        }
+        
+        .cloud2 {
+            width: 60px;
+            height: 30px;
+            top: 35%;
+            right: 20%;
+            animation-duration: 30s;
+            animation-delay: -5s;
+        }
+        
+        .cloud2::before {
+            width: 35px;
+            height: 35px;
+            top: -18px;
+            left: 15px;
+        }
+        
+        @keyframes float-cloud {
+            0%, 100% {
+                transform: translateX(0) translateY(0);
+            }
+            25% {
+                transform: translateX(20px) translateY(-10px);
+            }
+            50% {
+                transform: translateX(-10px) translateY(5px);
+            }
+            75% {
+                transform: translateX(15px) translateY(-5px);
+            }
+        }
+        
+        /* 太陽 */
+        .sun {
+            position: absolute;
+            top: 10%;
+            right: 15%;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, #FFD700 0%, #FFA500 70%);
+            border-radius: 50%;
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.5);
+            animation: sun-glow 3s ease-in-out infinite;
+        }
+        
+        @keyframes sun-glow {
+            0%, 100% {
+                box-shadow: 0 0 50px rgba(255, 215, 0, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 80px rgba(255, 215, 0, 0.8);
+            }
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px 20px 0 0;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '⛰️';
+            position: absolute;
+            font-size: 150px;
+            opacity: 0.05;
+            left: -30px;
+            top: -30px;
+            transform: rotate(-15deg);
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            color: #2C5F2D;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .subtitle {
+            font-size: 1.2em;
+            color: #4A7C59;
+            position: relative;
+        }
+        
+        .couple-names {
+            display: inline-block;
+            padding: 5px 15px;
+            background: linear-gradient(90deg, #7BB146 0%, #5A7F39 100%);
+            color: white;
+            border-radius: 20px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        
+        /* 天數選擇區 */
+        .day-selector {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .day-button {
+            padding: 15px 35px;
+            background: white;
+            border: 3px solid #7BB146;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #2C5F2D;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .day-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #7BB146 0%, #5A7F39 100%);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+        
+        .day-button:hover::before {
+            left: 0;
+        }
+        
+        .day-button:hover {
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(123, 177, 70, 0.4);
+        }
+        
+        .day-button.active {
+            background: linear-gradient(90deg, #7BB146 0%, #5A7F39 100%);
+            color: white;
+            border-color: transparent;
+        }
+        
+        /* 內容區 */
+        .content-area {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 0 0 20px 20px;
+            padding: 30px;
+            min-height: 500px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.2);
+        }
+        
+        .day-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .day-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* 行程時間軸 - 登山步道風格 */
+        .trail-timeline {
+            position: relative;
+            padding: 20px;
+        }
+        
+        .trail-path {
+            position: absolute;
+            left: 50px;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: repeating-linear-gradient(
+                to bottom,
+                #8B4513 0px,
+                #8B4513 10px,
+                transparent 10px,
+                transparent 15px
+            );
+        }
+        
+        .trail-item {
+            position: relative;
+            margin-bottom: 40px;
+            padding-left: 80px;
+        }
+        
+        .trail-marker {
+            position: absolute;
+            left: 38px;
+            top: 10px;
+            width: 28px;
+            height: 28px;
+            background: white;
+            border: 4px solid #7BB146;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            z-index: 2;
+        }
+        
+        .trail-marker::after {
+            content: '🥾';
+            font-size: 14px;
+        }
+        
+        .trail-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            border: 2px solid #E8F5E8;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .trail-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 25px rgba(123, 177, 70, 0.3);
+            border-color: #7BB146;
+        }
+        
+        .trail-time {
+            display: inline-block;
+            background: linear-gradient(90deg, #5A7F39 0%, #7BB146 100%);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        
+        .trail-location {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #2C5F2D;
+            margin-bottom: 10px;
+        }
+        
+        .trail-info {
+            background: #F5FFF5;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.9em;
+            color: #555;
+            border-left: 3px solid #7BB146;
+            margin-bottom: 10px;
+        }
+        
+        .memory-button {
+            background: linear-gradient(90deg, #7BB146 0%, #5A7F39 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.9em;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 3px 10px rgba(123, 177, 70, 0.3);
+        }
+        
+        .memory-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(123, 177, 70, 0.4);
+        }
+        
+        .has-memory {
+            background: linear-gradient(90deg, #FF6B6B 0%, #FF8787 100%);
+        }
+        
+        .special-tag {
+            display: inline-block;
+            background: #FFE4B5;
+            color: #D2691E;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            margin-left: 10px;
+            font-weight: bold;
+        }
+        
+        .highlight-tag {
+            display: inline-block;
+            background: #FFB6C1;
+            color: #C71585;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            margin-left: 10px;
+            font-weight: bold;
+        }
+        
+        /* 彈窗 */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+        
+        .popup-overlay.active {
+            display: flex;
+        }
+        
+        .popup-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideUp 0.3s ease;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .popup-header {
+            background: linear-gradient(90deg, #7BB146 0%, #5A7F39 100%);
+            color: white;
+            margin: -30px -30px 20px -30px;
+            padding: 20px 30px;
+            border-radius: 20px 20px 0 0;
+            font-size: 1.1em;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .popup-close {
+            background: rgba(255, 255, 255, 0.3);
+            border: none;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .popup-close:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: rotate(90deg);
+        }
+        
+        .memory-textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 15px;
+            border: 2px solid #E8F5E8;
+            border-radius: 10px;
+            font-size: 1em;
+            font-family: inherit;
+            resize: vertical;
+            transition: all 0.3s ease;
+            background: #F5FFF5;
+        }
+        
+        .memory-textarea:focus {
+            outline: none;
+            border-color: #7BB146;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(123, 177, 70, 0.1);
+        }
+        
+        .save-button {
+            background: linear-gradient(90deg, #7BB146 0%, #5A7F39 100%);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 20px;
+            font-size: 0.95em;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .save-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(123, 177, 70, 0.3);
+        }
+        
+        .memory-indicator {
+            display: none;
+            color: #7BB146;
+            font-size: 0.85em;
+            margin-top: 8px;
+            font-style: italic;
+        }
+        
+        .memory-indicator.show {
+            display: block;
+        }
+        
+        /* 手機版優化 */
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px 10px;
+            }
+            
+            .day-selector {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .day-button {
+                width: 100%;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .trail-item {
+                padding-left: 60px;
+            }
+            
+            .trail-path {
+                left: 30px;
+            }
+            
+            .trail-marker {
+                left: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 山脈背景 -->
+    <div class="mountain-bg">
+        <div class="mountain-layer mountain-1"></div>
+        <div class="mountain-layer mountain-2"></div>
+        <div class="mountain-layer mountain-3"></div>
+    </div>
+    
+    <!-- 雲朵 -->
+    <div class="cloud cloud1"></div>
+    <div class="cloud cloud2"></div>
+    
+    <!-- 太陽 -->
+    <div class="sun"></div>
+    
+    <div class="container">
+        <div class="header">
+            <h1>⛰️ 台北兩天一夜の冒險 ⛰️</h1>
+            <div class="subtitle">登山、美食、電影的完美旅程</div>
+            <div class="couple-names">👫 與萌萌的美好回憶</div>
+        </div>
+        
+        <div class="day-selector">
+            <button class="day-button active" id="day1Btn" onclick="showDay(1)">
+                🌄 第一天 - 登山冒險
+            </button>
+            <button class="day-button" id="day2Btn" onclick="showDay(2)">
+                🍛 第二天 - 美食之旅
+            </button>
+        </div>
+        
+        <div class="content-area">
+            <!-- 第一天內容 -->
+            <div class="day-content active" id="day1Content">
+                <div class="trail-timeline">
+                    <div class="trail-path"></div>
+                    
+                    <div class="trail-item">
+                        <div class="trail-marker"></div>
+                        <div class="trail-card">
+                            <div class="trail-time">13:30</div>
+                            <div class="trail-location">LA PIADA 義式薄餅</div>
+                            <div class="trail-info">
+                                📍 大安區復興南路一段<br>
+                                🍝 登山前的能量補充站
+                            </div>
+                            <button class="memory-button" data-location="LA PIADA 義式薄餅" data-time="13:30">
+                                📝 寫下回憶
+                            </button>
+                            <div class="memory-indicator">✨ 已記錄美好回憶</div>
+                        </div>
+                    </div>
+                    
+                    <div class="trail-item">
+                        <div class="trail-marker"></div>
+                        <div class="trail-card">
+                            <div class="trail-time">16:00</div>
+                            <div class="trail-location">金面山親山步道<span class="special-tag">攀岩挑戰</span></div>
+                            <div class="trail-info">
+                                ⛰️ 手腳並用的攀岩路線<br>
+                                🏔️ 挑戰剪刀石，征服台北小百岳
+                            </div>
+                            <button class="memory-button" data-location="金面山親山步道" data-time="16:00">
+                                📝 寫下回憶
+                            </button>
+                            <div class="memory-indicator">✨ 已記錄美好回憶</div>
+                        </div>
+                    </div>
+                    
+                    <div class="trail-item">
+                        <div class="trail-marker"></div>
+                        <div class="trail-card">
+                            <div class="trail-time">18:00</div>
+                            <div class="trail-location">山頂夕陽<span class="highlight-tag">浪漫時刻</span></div>
+                            <div class="trail-info">
+                                🌅 在剪刀石上看夕陽<br>
+                                🌆 360度俯瞰大台北盆地
+                            </div>
+                            <button class="memory-button" data-location="山頂夕陽" data-time="18:00">
+                                📝 寫下回憶
+                            </button>
+                            <div class="memory-indicator">✨ 已記錄美好回憶</div>
+                        </div>
+                    </div>
+                    
+                    <div class="trail-item">
+                        <div class="trail-marker"></div>
+                        <div class="trail-card">
+                            <div class="trail-time">20:30</div>
+                            <div class="trail-location">電影《紅豬》</div>
+                            <div class="trail-info">
+                                🎬 宮崎駿的天空冒險<br>
+                                🍿 登山後的放鬆時光
+                            </div>
+                            <button class="memory-button" data-location="電影《紅豬》" data-time="20:30">
+                                📝 寫下回憶
+                            </button>
+                            <div class="memory-indicator">✨ 已記錄美好回憶</div>
+                        </div>
+                    </div>
+                    
+                    <div class="trail-item">
+                        <div class="trail-marker"></div>
+                        <div class="trail-card">
+                            <div class="trail-time">22:00</div>
+                            <div class="trail-location">信義區夜遊</div>
+                            <div class="trail-info">
+                                🌃 城市燈火璀璨<br>
+                                🛍️ 從山林回到都市叢林
+                            </div>
+                            <button class="memory-button" data-location="信義區夜遊" data-time="22:00">
+                                📝 寫下回憶
+                            </button>
+                            <div class="memory-indicator">✨ 已記錄美好回憶</div>
+                        </div>
+                    </div>
+                    
+                    <div class="trail-item">
+                        <div class="trail-marker"></div>
+                        <div class="trail-card">
+                            <div class="trail-time">23:30</div>
+                            <div class="trail-location">一蘭拉麵<span class="special-tag">深夜補給</span></div>
+                            <div class="trail-info">
+                                🍜 登山後的完美宵夜<br>
+                                🥢 補充流失的鹽分與能量
+                            </div>
+                            <button class="memory-button" data-location="一蘭拉麵" data-time="23:30">
+                                📝 寫下回憶
+                            </button>
+                            <div class="memory-indicator">✨ 已記錄美好回憶</div>
+                        </div>
+                    </div>
+                    
+                    <div class="trail-item">
+                        <div class="trail-marker"></div>
+                        <div class="trail-card">
+                            <div class="trail-time">01:00</div>
+                            <div class="trail-location">回民宿休息</div>
+                            <div class="trail-info">
+                                🏠 結束冒險的一天<br>
+                                😴 做個登山的好夢
+                            </div>
+                            <button class="memory-button" data-location="回民宿休息" data-time="01:00">
+                                📝 寫下回憶
+                            </button>
+                            <div class="memory-indicator">✨ 已記錄美好回憶</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 第二天內容 -->
+            <div class="day-content" id="day2Content">
+                <div class="trail-timeline">
+                    <div class="trail-path"></div>
+                    
+                    <div class="trail-item">
+                        <div class="trail-marker"></div>
+                        <div class="trail-card">
+                            <div class="trail-time">11:00</div>
+                            <div class="trail-location">退房整裝</div>
+                            <div class="trail-info">
+                                🎒 收拾行囊<br>
+                                ☀️ 迎接美食探險日
+                            </div>
+                            <button class="memory-button" data-location="退房整裝" data-time="11:00">
+                                📝 寫下回憶
+                            </button>
+                            <div class="memory-indicator">✨ 已記錄美好回憶</div>
+                        </div>
+                    </div>
+                    
+                    <div class="trail-item">
+                        <div class="trail-marker"></div>
+                        <div class="trail-card">
+                            <div class="trail-time">12:00</div>
+                            <div class="trail-location">天菜咖哩<span class="highlight-tag">必吃美食</span></div>
+                            <div class="trail-info">
+                                🍛 秘製熟成咖哩專賣<br>
+                                ⭐ Google 4.8星高評價
+                            </div>
+                            <button class="memory-button" data-location="天菜咖哩" data-time="12:00">
+                                📝 寫下回憶
+                            </button>
+                            <div class="memory-indicator">✨ 已記錄美好回憶</div>
+                        </div>
+                    </div>
+                    
+                    <div class="trail-item">
+                        <div class="trail-marker"></div>
+                        <div class="trail-card">
+                            <div class="trail-time">14:00</div>
+                            <div class="trail-location">東區地下街</div>
+                            <div class="trail-info">
+                                🛍️ 地下商圈探索<br>
+                                😅 有點無聊的小插曲
+                            </div>
+                            <button class="memory-button" data-location="東區地下街" data-time="14:00">
+                                📝 寫下回憶
+                            </button>
+                            <div class="memory-indicator">✨ 已記錄美好回憶</div>
+                        </div>
+                    </div>
+                    
+                    <div class="trail-item">
+                        <div class="trail-marker"></div>
+                        <div class="trail-card">
+                            <div class="trail-time">15:00</div>
+                            <div class="trail-location">網咖時光<span class="special-tag">特別體驗</span></div>
+                            <div class="trail-info">
+                                🎮 一起玩遊戲<br>
+                                👻 看《鬼才知道》
+                            </div>
+                            <button class="memory-button" data-location="網咖時光" data-time="15:00">
+                                📝 寫下回憶
+                            </button>
+                            <div class="memory-indicator">✨ 已記錄美好回憶</div>
+                        </div>
+                    </div>
+                    
+                    <div class="trail-item">
+                        <div class="trail-marker"></div>
+                        <div class="trail-card">
+                            <div class="trail-time">19:00</div>
+                            <div class="trail-location">大稻埕滷肉飯</div>
+                            <div class="trail-info">
+                                🍚 傳統台灣美食<br>
+                                🏮 老街區的道地小吃
+                            </div>
+                            <button class="memory-button" data-location="大稻埕滷肉飯" data-time="19:00">
+                                📝 寫下回憶
+                            </button>
+                            <div class="memory-indicator">✨ 已記錄美好回憶</div>
+                        </div>
+                    </div>
+                    
+                    <div class="trail-item">
+                        <div class="trail-marker"></div>
+                        <div class="trail-card">
+                            <div class="trail-time">21:00</div>
+                            <div class="trail-location">大稻埕碼頭散步<span class="highlight-tag">浪漫結尾</span></div>
+                            <div class="trail-info">
+                                🌅 河岸夕陽美景<br>
+                                💕 兩天一夜的完美ending
+                            </div>
+                            <button class="memory-button" data-location="大稻埕碼頭散步" data-time="21:00">
+                                📝 寫下回憶
+                            </button>
+                            <div class="memory-indicator">✨ 已記錄美好回憶</div>
+                        </div>
+                    </div>
+                    
+                    <div class="trail-item">
+                        <div class="trail-marker"></div>
+                        <div class="trail-card">
+                            <div class="trail-time">22:30</div>
+                            <div class="trail-location">返程回家</div>
+                            <div class="trail-info">
+                                🚗 帶著滿滿回憶回家<br>
+                                💭 期待下次的冒險
+                            </div>
+                            <button class="memory-button" data-location="返程回家" data-time="22:30">
+                                📝 寫下回憶
+                            </button>
+                            <div class="memory-indicator">✨ 已記錄美好回憶</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 回憶記錄彈窗 -->
+    <div class="popup-overlay" id="memoryPopup">
+        <div class="popup-content">
+            <div class="popup-header">
+                <span id="popupTitle">記錄美好回憶</span>
+                <button class="popup-close" onclick="closeMemoryPopup()">×</button>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <strong>地點：</strong><span id="popupLocation"></span><br>
+                <strong>時間：</strong><span id="popupTime"></span>
+            </div>
+            <textarea 
+                id="memoryText" 
+                class="memory-textarea" 
+                placeholder="在這裡記錄下你們在這個地點的美好回憶..."></textarea>
+            <div style="text-align: right; margin-top: 15px;">
+                <button class="save-button" onclick="saveMemory()">💾 保存回憶</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 顯示指定天數的內容
+        function showDay(day) {
+            // 隱藏所有天數內容
+            const allContents = document.querySelectorAll('.day-content');
+            allContents.forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // 移除所有按鈕的active狀態
+            const allButtons = document.querySelectorAll('.day-button');
+            allButtons.forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // 顯示指定天數的內容
+            const targetContent = document.getElementById(`day${day}Content`);
+            const targetButton = document.getElementById(`day${day}Btn`);
+            
+            if (targetContent) {
+                targetContent.classList.add('active');
+            }
+            if (targetButton) {
+                targetButton.classList.add('active');
+            }
+        }
+        
+        // 打開回憶記錄彈窗
+        function openMemoryPopup(location, time) {
+            document.getElementById('popupLocation').textContent = location;
+            document.getElementById('popupTime').textContent = time;
+            document.getElementById('popupTitle').textContent = `記錄 ${location} 的回憶`;
+            document.getElementById('memoryText').value = '';
+            document.getElementById('memoryPopup').classList.add('active');
+            
+            // 聚焦到文字區域
+            setTimeout(() => {
+                document.getElementById('memoryText').focus();
+            }, 100);
+        }
+        
+        // 關閉回憶記錄彈窗
+        function closeMemoryPopup() {
+            document.getElementById('memoryPopup').classList.remove('active');
+        }
+        
+        // 保存回憶
+        function saveMemory() {
+            const location = document.getElementById('popupLocation').textContent;
+            const time = document.getElementById('popupTime').textContent;
+            const memory = document.getElementById('memoryText').value.trim();
+            
+            if (memory) {
+                // 這裡可以將回憶保存到localStorage或發送到服務器
+                localStorage.setItem(`memory_${location}_${time}`, memory);
+                
+                // 更新按鈕狀態
+                const button = document.querySelector(`[data-location="${location}"][data-time="${time}"]`);
+                if (button) {
+                    button.classList.add('has-memory');
+                    button.innerHTML = '💖 查看回憶';
+                    
+                    // 顯示記憶指示器
+                    const indicator = button.nextElementSibling;
+                    if (indicator && indicator.classList.contains('memory-indicator')) {
+                        indicator.classList.add('show');
+                    }
+                }
+                
+                closeMemoryPopup();
+                
+                // 顯示保存成功提示
+                alert('💖 回憶已成功保存！');
+            } else {
+                alert('請輸入一些回憶內容再保存哦～');
+            }
+        }
+        
+        // 為所有回憶按鈕添加點擊事件
+        document.addEventListener('DOMContentLoaded', function() {
+            const memoryButtons = document.querySelectorAll('.memory-button');
+            
+            memoryButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const location = this.getAttribute('data-location');
+                    const time = this.getAttribute('data-time');
+                    
+                    // 檢查是否已有回憶
+                    const existingMemory = localStorage.getItem(`memory_${location}_${time}`);
+                    
+                    if (existingMemory) {
+                        // 如果有回憶，顯示回憶內容
+                        if (this.classList.contains('has-memory')) {
+                            alert(`💭 ${location} (${time}) 的回憶：\n\n${existingMemory}`);
+                        } else {
+                            openMemoryPopup(location, time);
+                            document.getElementById('memoryText').value = existingMemory;
+                        }
+                    } else {
+                        // 如果沒有回憶，打開記錄彈窗
+                        openMemoryPopup(location, time);
+                    }
+                });
+            });
+            
+            // 點擊彈窗外部關閉彈窗
+            document.getElementById('memoryPopup').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeMemoryPopup();
+                }
+            });
+            
+            // ESC鍵關閉彈窗
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeMemoryPopup();
+                }
+            });
+            
+            // 載入頁面時檢查已保存的回憶
+            loadExistingMemories();
+        });
+        
+        // 載入已存在的回憶
+        function loadExistingMemories() {
+            const memoryButtons = document.querySelectorAll('.memory-button');
+            
+            memoryButtons.forEach(button => {
+                const location = button.getAttribute('data-location');
+                const time = button.getAttribute('data-time');
+                const existingMemory = localStorage.getItem(`memory_${location}_${time}`);
+                
+                if (existingMemory) {
+                    button.classList.add('has-memory');
+                    button.innerHTML = '💖 查看回憶';
+                    
+                    // 顯示記憶指示器
+                    const indicator = button.nextElementSibling;
+                    if (indicator && indicator.classList.contains('memory-indicator')) {
+                        indicator.classList.add('show');
+                    }
+                }
+            });
+        }
+        
+        // 添加一些動畫效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 為trail-card添加進入動畫
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            // 觀察所有trail-card
+            const trailCards = document.querySelectorAll('.trail-card');
+            trailCards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>
