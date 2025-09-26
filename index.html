@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>嘉義雲林三日遊 | 手機版</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang TC', sans-serif;
+            line-height: 1.5;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow-x: hidden;
+        }
+
+        /* 區塊樣式 */
+        .section {
+            min-height: 100vh;
+            padding: 20px 15px 40px 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            scroll-margin-top: 0;
+        }
+
+        /* 首頁區塊 */
+        .hero-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            text-align: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 250px;
+            border-radius: 20px;
+            object-fit: cover;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .hero-dates {
+            font-size: 1rem;
+            color: #777;
+            background: #f0f0f0;
+            display: inline-block;
+            padding: 10px 16px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+        }
+
+        .hero-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .hero-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 15px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        .hero-btn:hover, .hero-btn:active {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .hero-btn-icon {
+            display: block;
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        /* 行程區塊 */
+        .schedule-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 25px;
+            text-align: center;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .date-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .date-btn {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid transparent;
+            padding: 15px 8px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        .date-btn.active {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .date-btn small {
+            display: block;
+            margin-top: 2px;
+        }
+
+        /* 行程內容 */
+        .day-content-container {
+            flex: 1;
+            overflow-y: auto;
+            max-height: 60vh;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .day-card {
+            display: none;
+            padding: 0;
+        }
+
+        .day-card.active {
+            display: block;
+        }
+
+        .day-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .day-title {
+            font-size: 1.6rem;
+            margin-bottom: 5px;
+        }
+
+        .day-summary {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 12px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, #667eea, #764ba2);
+            border-radius: 1px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 25px;
+            padding-left: 25px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 8px;
+            width: 16px;
+            height: 16px;
+            background: #667eea;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .time-badge {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+
+        .activity-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 6px;
+        }
+
+        .activity-details {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+        }
+
+        .duration-tag {
+            background: #f8f9fa;
+            color: #6c757d;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            display: inline-block;
+            margin-top: 6px;
+        }
+
+        .transport-info, .restaurant-highlight {
+            background: rgba(52, 152, 219, 0.1);
+            border-left: 3px solid #3498db;
+            padding: 10px 12px;
+            margin: 10px 0;
+            border-radius: 6px;
+            font-size: 0.85rem;
+        }
+
+        .restaurant-highlight {
+            background: rgba(231, 76, 60, 0.1);
+            border-left-color: #e74c3c;
+        }
+
+        /* 小提醒區塊 */
+        .tips-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding-bottom: 120px;
+        }
+
+        .tips-content {
+            max-height: 70vh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .tip-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .tip-icon {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .tip-title {
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
+            text-align: center;
+        }
+
+        .tip-card p {
+            font-size: 0.85rem;
+            line-height: 1.4;
+            text-align: center;
+        }
+
+        /* 地點資訊 */
+        .location-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+
+        .location-info h3 {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .location-list {
+            max-height: 300px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .location-list ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .location-list li {
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .location-list li:last-child {
+            border-bottom: none;
+        }
+
+        .map-buttons {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .map-button {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 15px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        .map-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .map-button small {
+            display: block;
+            font-size: 0.8rem;
+            opacity: 0.9;
+            font-weight: normal;
+            margin-top: 3px;
+        }
+
+        /* 彈窗樣式 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            margin: 50% auto;
+            padding: 30px;
+            border-radius: 20px;
+            width: 80%;
+            max-width: 300px;
+            text-align: center;
+            transform: translateY(-50%);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .modal-content p {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .modal-close {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 15px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* 滾動條樣式 */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(241, 241, 241, 0.5);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+
+        /* 隱藏區塊 */
+        .section.hidden {
+            display: none;
+        }
+
+        /* 優化滾動體驗 */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!-- 首頁區塊 -->
+    <section class="section hero-section" id="hero">
+        <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop&crop=center" alt="虎尾鐵橋" class="hero-image">
+        <h1 class="hero-title">嘉義雲林浪漫之旅</h1>
+        <p class="hero-subtitle">與愛人一同探索台灣西部的美好</p>
+        <div class="hero-dates">📅 2025年9月27日 - 9月29日</div>
+        
+        <div class="hero-buttons">
+            <button class="hero-btn" onclick="showSection('schedule')">
+                <span class="hero-btn-icon">📅</span>
+                行程
+            </button>
+            <button class="hero-btn" onclick="showSection('tips')">
+                <span class="hero-btn-icon">💡</span>
+                提醒
+            </button>
+            <button class="hero-btn" onclick="showModal('budget')">
+                <span class="hero-btn-icon">💰</span>
+                預算
+            </button>
+            <button class="hero-btn" onclick="showModal('photos')">
+                <span class="hero-btn-icon">📸</span>
+                照片
+            </button>
+        </div>
+    </section>
+
+    <!-- 行程安排區塊 -->
+    <section class="section schedule-section hidden" id="schedule">
+        <h2 class="section-title">📅 行程安排</h2>
+        
+        <!-- 日期選擇器 -->
+        <div class="date-selector">
+            <button class="date-btn active" onclick="showDay(1)">
+                第一天<br><small>9/27 (六)</small>
+            </button>
+            <button class="date-btn" onclick="showDay(2)">
+                第二天<br><small>9/28 (日)</small>
+            </button>
+            <button class="date-btn" onclick="showDay(3)">
+                第三天<br><small>9/29 (一)</small>
+            </button>
+        </div>
+
+        <!-- 行程內容容器 -->
+        <div class="day-content-container">
+            <!-- Day 1 -->
+            <div class="day-card active" id="day1">
+                <div class="day-header">
+                    <h3 class="day-title">第一天</h3>
+                    <p class="day-summary">嘉義探索之旅</p>
+                </div>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="time-badge">09:00</div>
+                        <div class="activity-title">🚄 嘉義高鐵站出發</div>
+                        <div class="activity-details">抵達高鐵站，辦理租車手續</div>
+                        <div class="duration-tag">預留30分鐘</div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="time-badge">09:20 - 11:00</div>
+                        <div class="activity-title">🏛️ 故宮南院</div>
+                        <div class="activity-details">探索精緻的展覽與美麗的湖景步道</div>
+                        <div class="transport-info">
+                            <strong>交通：</strong>從高鐵站約10分鐘車程<br>
+                            <strong>注意：</strong>園區停車場到主館步行需15-20分鐘
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="time-badge">11:20 - 13:00</div>
+                        <div class="activity-title">🚂 蒜頭糖廠</div>
+                        <div class="activity-details">搭乘五分車，品嚐古早味冰品，享用午餐</div>
+                        <div class="duration-tag">車程15分鐘</div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="time-badge">13:30 - 14:00</div>
+                        <div class="activity-title">🏨 民雄住宿 Check-in</div>
+                        <div class="activity-details">621 嘉義縣民雄鄉66-37號</div>
+                        <div class="duration-tag">車程40分鐘</div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="time-badge">15:30 - 17:30</div>
+                        <div class="activity-title">🏮 檜意森活村</div>
+                        <div class="activity-details">漫步日式建築群，感受歷史氛圍</div>
+                        <div class="duration-tag">車程30分鐘</div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="time-badge">18:00 - 20:00</div>
+                        <div class="activity-title">🍜 文化路夜市</div>
+                        <div class="activity-details">品嚐嘉義在地美食，感受夜市熱鬧氛圍</div>
+                        <div class="restaurant-highlight">
+                            推薦美食：雞肉飯、方塊酥、豆花
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 第一天地圖導航 -->
+                <div style="margin-top: 25px; text-align: center;">
+                    <a href="https://maps.app.goo.gl/2KQsxgLZDEeEf3nU7" target="_blank" class="map-button">
+                        🗺️ 第一天導航路線<small>嘉義探索之旅</small>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Day 2 -->
+            <div class="day-card" id="day2">
+                <div class="day-header">
+                    <h3 class="day-title">第二天</h3>
+                    <p class="day-summary">轉戰雲林冒險</p>
+                </div>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="time-badge">08:00 - 08:30</div>
+                        <div class="activity-title">🚗 還車 & 轉換交通</div>
+                        <div class="activity-details">民雄 → 嘉義高鐵站還車</div>
+                        <div class="duration-tag">車程25分鐘</div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="time-badge">08:30 - 09:20</div>
+                        <div class="activity-title">🚆 前往雲林斗六</div>
+                        <div class="activity-details">嘉義 → 斗六成功路102號</div>
+                        <div class="transport-info">
+                            <strong>建議：</strong>搭區間車約40分鐘，或朋友接送
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="time-badge">09:30</div>
+                        <div class="activity-title">🔑 取車開始雲林之旅</div>
+                        <div class="activity-details">在成功路102號取朋友車輛</div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="time-badge">10:00 - 11:30</div>
+                        <div class="activity-title">🌈 五年千歲公園</div>
+                        <div class="activity-details">褒忠鄉 - 探索迷宮造景與彩虹拱橋</div>
+                        <div class="transport-info">
+                            <strong>體力需求：</strong>中度，有階梯與步道<br>
+                            <strong>建議：</strong>穿好走的鞋，備水防曬
+                        </div>
+                        <div class="duration-tag">車程30分鐘</div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="time-badge">12:10 - 14:00</div>
+                        <div class="activity-title">🐄 千巧谷牛樂園牧場</div>
+                        <div class="activity-details">崙背鄉 - 與可愛牛隻互動，品嚐新鮮乳製品</div>
+                        <div class="restaurant-highlight">
+                            特色：新鮮牛奶、手工甜點、伴手禮採購
+                        </div>
+                        <div class="duration-tag">車程30-40分鐘</div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="time-badge">15:00 - 17:30</div>
+                        <div class="activity-title">☕ 斗六太平老街</div>
+                        <div class="activity-details">漫步老街，享受咖啡時光</div>
+                        <div class="duration-tag">車程35-45分鐘</div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="time-badge">18:00</div>
+                        <div class="activity-title">🏨 斗六住宿 & 晚餐</div>
+                        <div class="activity-details">64054 雲林縣斗六市府文路121號</div>
+                    </div>
+                </div>
+                
+                <!-- 第二天地圖導航 -->
+                <div style="margin-top: 25px; text-align: center;">
+                    <a href="https://maps.app.goo.gl/jPhrWR6q8A4H1YUM7" target="_blank" class="map-button">
+                        🗺️ 第二天導航路線<small>轉戰雲林冒險</small>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Day 3 -->
+            <div class="day-card" id="day3">
+                <div class="day-header">
+                    <h3 class="day-title">第三天</h3>
+                    <p class="day-summary">虎尾美食與古蹟巡禮</p>
+                </div>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="time-badge">07:00</div>
+                        <div class="activity-title">🌅 早起出發</div>
+                        <div class="activity-details">從斗六前往虎尾</div>
+                        <div class="duration-tag">車程20-25分鐘</div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="time-badge">07:30 - 08:00</div>
+                        <div class="activity-title">🍖 兩撇（兩丿）爌肉飯</div>
+                        <div class="activity-details">虎尾公安路41號 - 品嚐道地台灣早餐</div>
+                        <div class="restaurant-highlight">
+                            <strong>營業時間：</strong>06:00-10:00<br>
+                            <strong>特色：</strong>傳統爌肉飯，建議早到避免售罄
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="time-badge">08:10 - 08:50</div>
+                        <div class="activity-title">🌉 虎尾鐵橋</div>
+                        <div class="activity-details">縣定古蹟巡禮，晨光攝影絕佳時機</div>
+                        <div class="transport-info">
+                            <strong>步道：</strong>平坦好走，適合拍照<br>
+                            <strong>景點：</strong>可順遊虎尾遊客中心
+                        </div>
+                        <div class="duration-tag">步行5-10分鐘</div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="time-badge">09:20</div>
+                        <div class="activity-title">🏁 行程圓滿結束</div>
+                        <div class="activity-details">回到斗六成功路102號交還車輛</div>
+                        <div class="duration-tag">車程25-30分鐘</div>
+                    </div>
+                </div>
+                
+                <!-- 第三天地圖導航 -->
+                <div style="margin-top: 25px; text-align: center;">
+                    <a href="https://maps.app.goo.gl/Ce3xmx8oiAbBxNHo8" target="_blank" class="map-button">
+                        🗺️ 第三天導航路線<small>虎尾美食巡禮</small>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 返回首頁按鈕 -->
+        <div style="text-align: center; margin-top: 20px;">
+            <button class="hero-btn" onclick="showSection('hero')" style="width: auto; padding: 12px 30px;">
+                🏠 返回首頁
+            </button>
+        </div>
+    </section>
+
+    <!-- 小提醒區塊 -->
+    <section class="section tips-section hidden" id="tips">
+        <h2 class="section-title">💝 旅行小提醒</h2>
+        <div class="tips-content">
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <div class="tip-icon">⏰</div>
+                    <h4 class="tip-title">時間掌控</h4>
+                    <p>兩撇爌肉飯營業至10:00，建議07:30前抵達。五年千歲公園建議上午前往。</p>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon">👟</div>
+                    <h4 class="tip-title">穿著建議</h4>
+                    <p>穿著舒適好走的鞋子，五年千歲公園有階梯步道。準備帽子和防曬用品。</p>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon">📱</div>
+                    <h4 class="tip-title">實用工具</h4>
+                    <p>下載Google Maps離線地圖，準備行動電源。千巧谷營業時間建議出發前確認。</p>
+                </div>
+                <div class="tip-card">
+                    <div class="tip-icon">🎒</div>
+                    <h4 class="tip-title">必備物品</h4>
+                    <p>相機充電器、水壺、小傘、現金。故宮南院園區停車場到主館需步行15-20分鐘。</p>
+                </div>
+            </div>
+
+            <!-- 地點資訊整合到提醒中 -->
+            <div class="location-info">
+                <h3>📍 重要地點資訊</h3>
+                <div class="location-list">
+                    <ul>
+                        <li>🚄 <strong>嘉義高鐵站</strong><br>起迄點，租車取車地點</li>
+                        <li>🏛️ <strong>故宮南院</strong><br>嘉義太保市，園區停車場到主館步行15-20分鐘</li>
+                        <li>🚂 <strong>蒜頭糖廠</strong><br>嘉義六腳鄉，五分車體驗</li>
+                        <li>🏨 <strong>民雄住宿</strong><br>621 嘉義縣民雄鄉66-37號</li>
+                        <li>🏨 <strong>斗六住宿</strong><br>64054 雲林縣斗六市府文路121號</li>
+                        <li>🌈 <strong>五年千歲公園</strong><br>雲林褒忠鄉，有階梯步道需備水防曬</li>
+                        <li>🐄 <strong>千巧谷牧場</strong><br>雲林崙背鄉，新鮮乳製品體驗</li>
+                        <li>🍖 <strong>兩撇爌肉飯</strong><br>雲林虎尾鎮公安路41號，06:00-10:00營業</li>
+                        <li>🌉 <strong>虎尾鐵橋</strong><br>雲林虎尾鎮，縣定古蹟平坦好走</li>
+                        <li>🚗 <strong>最終地點</strong><br>640 雲林縣斗六市成功路102號，還車地點</li>
+                    </ul>
+                </div>
+
+                <div class="map-buttons">
+                    <a href="https://maps.app.goo.gl/2KQsxgLZDEeEf3nU7" target="_blank" class="map-button">
+                        📍 第一天路線<small>嘉義探索之旅</small>
+                    </a>
+                    <a href="https://maps.app.goo.gl/jPhrWR6q8A4H1YUM7" target="_blank" class="map-button">
+                        📍 第二天路線<small>轉戰雲林冒險</small>
+                    </a>
+                    <a href="https://maps.app.goo.gl/Ce3xmx8oiAbBxNHo8" target="_blank" class="map-button">
+                        📍 第三天路線<small>虎尾美食巡禮</small>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 返回首頁按鈕 -->
+        <div style="text-align: center; margin-top: 20px;">
+            <button class="hero-btn" onclick="showSection('hero')" style="width: auto; padding: 12px 30px;">
+                🏠 返回首頁
+            </button>
+        </div>
+    </section>
+
+    <!-- 彈窗 -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <h3 id="modal-title">功能開發中</h3>
+            <p id="modal-message">此功能正在開發中，敬請期待！</p>
+            <button class="modal-close" onclick="closeModal()">確定</button>
+        </div>
+    </div>
+
+    <script>
+        let currentDay = 1;
+        let currentSection = 'hero';
+
+        // 顯示指定區塊
+        function showSection(sectionId) {
+            console.log('切換到區塊:', sectionId);
+            
+            // 隱藏所有區塊
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            
+            // 顯示指定區塊
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.remove('hidden');
+                currentSection = sectionId;
+                
+                // 滾動到頂部
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        // 顯示指定天數的行程
+        function showDay(dayNumber) {
+            console.log('切換到第', dayNumber, '天');
+            
+            const dateBtns = document.querySelectorAll('.date-btn');
+            const dayCards = document.querySelectorAll('.day-card');
+            
+            // 更新日期按鈕狀態
+            dateBtns.forEach((btn, index) => {
+                btn.classList.remove('active');
+                if (index === dayNumber - 1) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // 更新行程卡片顯示
+            dayCards.forEach((card, index) => {
+                card.classList.remove('active');
+                card.style.display = 'none';
+                if (index === dayNumber - 1) {
+                    card.classList.add('active');
+                    card.style.display = 'block';
+                }
+            });
+            
+            currentDay = dayNumber;
+        }
+
+        // 顯示彈窗
+        function showModal(type) {
+            console.log('顯示彈窗:', type);
+            
+            const modal = document.getElementById('modal');
+            const title = document.getElementById('modal-title');
+            const message = document.getElementById('modal-message');
+            
+            if (type === 'budget') {
+                title.textContent = '💰 預算功能';
+                message.textContent = '預算計算功能開發中，敬請期待！';
+            } else if (type === 'photos') {
+                title.textContent = '📸 照片功能';
+                message.textContent = '照片上傳與相簿功能開發中，敬請期待！';
+            }
+            
+            modal.style.display = 'block';
+            
+            // 點擊背景關閉彈窗
+            modal.onclick = function(event) {
+                if (event.target === modal) {
+                    closeModal();
+                }
+            };
+        }
+
+        // 關閉彈窗
+        function closeModal() {
+            console.log('關閉彈窗');
+            const modal = document.getElementById('modal');
+            modal.style.display = 'none';
+        }
+
+        // 頁面載入完成後初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('頁面載入完成，開始初始化...');
+            
+            // 初始化顯示首頁
+            showSection('hero');
+            
+            // 初始化第一天行程
+            showDay(1);
+            
+            // 設置日期按鈕事件（使用事件委派）
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('date-btn')) {
+                    e.preventDefault();
+                    const buttons = Array.from(document.querySelectorAll('.date-btn'));
+                    const index = buttons.indexOf(e.target);
+                    if (index !== -1) {
+                        showDay(index + 1);
+                    }
+                }
+            });
+            
+            // 防止按鈕雙擊
+            document.querySelectorAll('button, .map-button').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    this.style.pointerEvents = 'none';
+                    setTimeout(() => {
+                        this.style.pointerEvents = 'auto';
+                    }, 300);
+                });
+            });
+            
+            console.log('初始化完成');
+        });
+
+        // 鍵盤支持
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // 觸摸滑動支持（簡化版）
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchEndX = 0;
+        let touchEndY = 0;
+
+        document.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+        }, { passive: true });
+
+        document.addEventListener('touchend', function(e) {
+            touchEndX = e.changedTouches[0].screenX;
+            touchEndY = e.changedTouches[0].screenY;
+            handleGesture();
+        }, { passive: true });
+
+        function handleGesture() {
+            const deltaX = touchEndX - touchStartX;
+            const deltaY = touchEndY - touchStartY;
+            const minSwipeDistance = 50;
+            
+            // 在行程頁面，左右滑動切換天數
+            if (currentSection === 'schedule' && Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > minSwipeDistance) {
+                if (deltaX > 0 && currentDay > 1) {
+                    // 右滑，上一天
+                    showDay(currentDay - 1);
+                } else if (deltaX < 0 && currentDay < 3) {
+                    // 左滑，下一天
+                    showDay(currentDay + 1);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
