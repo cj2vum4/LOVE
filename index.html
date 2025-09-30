@@ -12,11 +12,27 @@
         }
 
         body {
-            font-family: 'Microsoft YaHei', 'PingFang TC', sans-serif;
-            line-height: 1.5;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Microsoft YaHei', 'PingFang TC', 'Noto Sans TC', sans-serif;
+            line-height: 1.6;
+            color: #4a4a4a;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
             overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 182, 193, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 192, 203, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 218, 225, 0.2) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
         }
 
         /* 區塊樣式 */
@@ -31,11 +47,15 @@
 
         /* 首頁區塊 */
         .hero-section {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(15px);
             text-align: center;
             justify-content: center;
             position: relative;
+            border-radius: 25px;
+            margin: 10px;
+            box-shadow: 0 20px 40px rgba(255, 182, 193, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
         .hero-image {
@@ -48,28 +68,41 @@
         }
 
         .hero-title {
-            font-size: 2.5rem;
-            font-weight: bold;
-            background: linear-gradient(45deg, #667eea, #764ba2);
+            font-size: 2.8rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #ff6b9d, #ff9a9e, #fecfef);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 8px rgba(255, 107, 157, 0.3);
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            0% { filter: brightness(1); }
+            100% { filter: brightness(1.1); }
         }
 
         .hero-subtitle {
-            font-size: 1.2rem;
-            color: #555;
-            margin-bottom: 15px;
+            font-size: 1.3rem;
+            color: #6b5b95;
+            margin-bottom: 20px;
+            font-weight: 500;
+            opacity: 0.9;
         }
 
         .hero-dates {
-            font-size: 1rem;
-            color: #777;
-            background: #f0f0f0;
+            font-size: 1.1rem;
+            color: #8b5a96;
+            background: linear-gradient(135deg, rgba(255, 182, 193, 0.3), rgba(255, 218, 225, 0.3));
             display: inline-block;
-            padding: 10px 16px;
-            border-radius: 20px;
-            margin-bottom: 30px;
+            padding: 12px 20px;
+            border-radius: 25px;
+            margin-bottom: 35px;
+            border: 1px solid rgba(255, 182, 193, 0.4);
+            box-shadow: 0 4px 15px rgba(255, 182, 193, 0.2);
+            backdrop-filter: blur(10px);
         }
 
         .hero-buttons {
@@ -80,23 +113,41 @@
         }
 
         .hero-btn {
-            background: linear-gradient(45deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #ff6b9d, #ff9a9e, #fecfef);
             color: white;
             border: none;
-            padding: 15px 20px;
-            border-radius: 15px;
-            font-size: 1rem;
-            font-weight: bold;
+            padding: 18px 24px;
+            border-radius: 20px;
+            font-size: 1.1rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 8px 25px rgba(255, 107, 157, 0.4);
             -webkit-tap-highlight-color: transparent;
             touch-action: manipulation;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s;
+        }
+
+        .hero-btn:hover::before {
+            left: 100%;
         }
 
         .hero-btn:hover, .hero-btn:active {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(255, 107, 157, 0.5);
+            background: linear-gradient(135deg, #ff5a8a, #ff8a9a, #fec5e5);
         }
 
         .hero-btn-icon {
@@ -107,19 +158,25 @@
 
         /* 行程區塊 */
         .schedule-section {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            margin: 10px;
+            box-shadow: 0 20px 40px rgba(255, 182, 193, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
         .section-title {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 25px;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #6b5b95;
+            margin-bottom: 30px;
             text-align: center;
-            background: linear-gradient(45deg, #667eea, #764ba2);
+            background: linear-gradient(45deg, #ff6b9d, #ff9a9e, #fecfef);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 4px rgba(255, 107, 157, 0.2);
         }
 
         .date-selector {
@@ -130,25 +187,33 @@
         }
 
         .date-btn {
-            background: rgba(255, 255, 255, 0.9);
-            border: 2px solid transparent;
-            padding: 15px 8px;
-            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid rgba(255, 182, 193, 0.3);
+            padding: 18px 12px;
+            border-radius: 20px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: bold;
-            font-size: 0.9rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-weight: 600;
+            font-size: 0.95rem;
             text-align: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 20px rgba(255, 182, 193, 0.2);
             -webkit-tap-highlight-color: transparent;
             touch-action: manipulation;
+            backdrop-filter: blur(10px);
+        }
+
+        .date-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(255, 182, 193, 0.3);
+            border-color: rgba(255, 107, 157, 0.5);
         }
 
         .date-btn.active {
-            background: linear-gradient(45deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #ff6b9d, #ff9a9e);
             color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(255, 107, 157, 0.4);
+            border-color: rgba(255, 107, 157, 0.6);
         }
 
         .date-btn small {
@@ -174,12 +239,14 @@
         }
 
         .day-header {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #ff6b9d, #ff9a9e, #fecfef);
             color: white;
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 20px;
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 25px;
             text-align: center;
+            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .day-title {
@@ -228,58 +295,69 @@
         }
 
         .time-badge {
-            background: linear-gradient(45deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #ff6b9d, #ff9a9e);
             color: white;
-            padding: 6px 12px;
-            border-radius: 15px;
-            font-weight: bold;
-            font-size: 0.8rem;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
             display: inline-block;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 15px rgba(255, 107, 157, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .activity-title {
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 6px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #6b5b95;
+            margin-bottom: 8px;
         }
 
         .activity-details {
-            color: #666;
-            font-size: 0.9rem;
-            margin-bottom: 6px;
+            color: #8b5a96;
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            line-height: 1.5;
         }
 
         .duration-tag {
-            background: #f8f9fa;
-            color: #6c757d;
-            padding: 3px 10px;
-            border-radius: 12px;
-            font-size: 0.75rem;
+            background: linear-gradient(135deg, rgba(255, 182, 193, 0.3), rgba(255, 218, 225, 0.3));
+            color: #8b5a96;
+            padding: 6px 14px;
+            border-radius: 15px;
+            font-size: 0.8rem;
             display: inline-block;
-            margin-top: 6px;
+            margin-top: 8px;
+            border: 1px solid rgba(255, 182, 193, 0.4);
+            font-weight: 500;
         }
 
         .transport-info, .restaurant-highlight {
-            background: rgba(52, 152, 219, 0.1);
-            border-left: 3px solid #3498db;
-            padding: 10px 12px;
-            margin: 10px 0;
-            border-radius: 6px;
-            font-size: 0.85rem;
+            background: linear-gradient(135deg, rgba(255, 182, 193, 0.15), rgba(255, 218, 225, 0.15));
+            border-left: 4px solid #ff6b9d;
+            padding: 12px 15px;
+            margin: 12px 0;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255, 182, 193, 0.3);
         }
 
         .restaurant-highlight {
-            background: rgba(231, 76, 60, 0.1);
-            border-left-color: #e74c3c;
+            background: linear-gradient(135deg, rgba(255, 192, 203, 0.2), rgba(255, 218, 225, 0.2));
+            border-left-color: #ff9a9e;
+            border-color: rgba(255, 154, 158, 0.4);
         }
 
         /* 小提醒區塊 */
         .tips-section {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(15px);
             padding-bottom: 120px;
+            border-radius: 25px;
+            margin: 10px;
+            box-shadow: 0 20px 40px rgba(255, 182, 193, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
         .tips-content {
@@ -296,45 +374,57 @@
         }
 
         .tip-card {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 12px;
-            padding: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 248, 250, 0.9));
+            border-radius: 18px;
+            padding: 20px;
+            box-shadow: 0 8px 25px rgba(255, 182, 193, 0.2);
+            border: 1px solid rgba(255, 182, 193, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .tip-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(255, 182, 193, 0.3);
         }
 
         .tip-icon {
-            font-size: 1.8rem;
-            margin-bottom: 10px;
+            font-size: 2.2rem;
+            margin-bottom: 15px;
             text-align: center;
+            filter: drop-shadow(0 2px 4px rgba(255, 107, 157, 0.3));
         }
 
         .tip-title {
-            font-size: 1rem;
-            font-weight: bold;
-            margin-bottom: 8px;
-            color: #333;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #6b5b95;
             text-align: center;
         }
 
         .tip-card p {
-            font-size: 0.85rem;
-            line-height: 1.4;
+            font-size: 0.9rem;
+            line-height: 1.5;
             text-align: center;
+            color: #8b5a96;
         }
 
         /* 地點資訊 */
         .location-info {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 15px;
-            margin-top: 20px;
+            background: linear-gradient(135deg, rgba(255, 248, 250, 0.8), rgba(255, 240, 245, 0.8));
+            padding: 25px;
+            border-radius: 20px;
+            margin-top: 25px;
+            border: 1px solid rgba(255, 182, 193, 0.3);
+            box-shadow: 0 8px 25px rgba(255, 182, 193, 0.15);
         }
 
         .location-info h3 {
-            font-size: 1.3rem;
-            color: #333;
-            margin-bottom: 15px;
+            font-size: 1.4rem;
+            color: #6b5b95;
+            margin-bottom: 20px;
             text-align: center;
+            font-weight: 600;
         }
 
         .location-list {
@@ -349,53 +439,18 @@
         }
 
         .location-list li {
-            margin-bottom: 12px;
-            font-size: 0.9rem;
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 182, 193, 0.3);
+            color: #8b5a96;
+            line-height: 1.5;
         }
 
         .location-list li:last-child {
             border-bottom: none;
         }
 
-        .map-buttons {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .map-button {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-            padding: 15px 20px;
-            border: none;
-            border-radius: 15px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: block;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
-            -webkit-tap-highlight-color: transparent;
-            touch-action: manipulation;
-        }
-
-        .map-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
-        }
-
-        .map-button small {
-            display: block;
-            font-size: 0.8rem;
-            opacity: 0.9;
-            font-weight: normal;
-            margin-top: 3px;
-        }
 
         /* 彈窗樣式 */
         .modal {
@@ -412,14 +467,17 @@
 
         .modal-content {
             background: white;
-            margin: 50% auto;
-            padding: 30px;
+            margin: 5% auto;
+            padding: 20px;
             border-radius: 20px;
-            width: 80%;
-            max-width: 300px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
             text-align: center;
-            transform: translateY(-50%);
+            transform: none;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         .modal-content h3 {
@@ -522,186 +580,210 @@
             <div class="day-card active" id="day1">
                 <div class="day-header">
                     <h3 class="day-title">第一天</h3>
-                    <p class="day-summary">嘉義探索之旅</p>
+                    <p class="day-summary">嘉義市區探索</p>
                 </div>
                 <div class="timeline">
                     <div class="timeline-item">
-                        <div class="time-badge">09:00</div>
-                        <div class="activity-title">🚄 嘉義高鐵站出發</div>
-                        <div class="activity-details">抵達高鐵站，辦理租車手續</div>
-                        <div class="duration-tag">預留30分鐘</div>
+                        <div class="time-badge">10:50</div>
+                        <div class="activity-title">🚄 嘉義高鐵站</div>
+                        <div class="activity-details">抵達嘉義高鐵站</div>
                     </div>
                     
                     <div class="timeline-item">
-                        <div class="time-badge">09:20 - 11:00</div>
-                        <div class="activity-title">🏛️ 故宮南院</div>
-                        <div class="activity-details">探索精緻的展覽與美麗的湖景步道</div>
-                        <div class="transport-info">
-                            <strong>交通：</strong>從高鐵站約10分鐘車程<br>
-                            <strong>注意：</strong>園區停車場到主館步行需15-20分鐘
+                        <div class="time-badge">11:30</div>
+                        <div class="activity-title">🚌 坐接駁公車到嘉義車站</div>
+                        <div class="activity-details">搭乘接駁公車前往嘉義車站</div>
+                        <div class="duration-tag">車程約40分鐘</div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="time-badge">12:00</div>
+                        <div class="activity-title">🏍️ 租機車</div>
+                        <div class="activity-details">在嘉義車站附近租機車</div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="time-badge">12:30</div>
+                        <div class="activity-title">🍜 四味果汁涼麵</div>
+                        <div class="activity-details">品嚐嘉義特色涼麵與果汁</div>
+                        <div class="restaurant-highlight">
+                            推薦：涼麵配四味果汁，清爽解膩
                         </div>
                     </div>
                     
                     <div class="timeline-item">
-                        <div class="time-badge">11:20 - 13:00</div>
-                        <div class="activity-title">🚂 蒜頭糖廠</div>
-                        <div class="activity-details">搭乘五分車，品嚐古早味冰品，享用午餐</div>
-                        <div class="duration-tag">車程15分鐘</div>
+                        <div class="time-badge">13:30</div>
+                        <div class="activity-title">🏛️ 台灣花磚博物館</div>
+                        <div class="activity-details">欣賞台灣傳統花磚藝術與歷史</div>
+                        <div class="transport-info">
+                            <strong>特色：</strong>台灣唯一花磚博物館，展示珍貴花磚收藏
+                        </div>
                     </div>
                     
                     <div class="timeline-item">
-                        <div class="time-badge">13:30 - 14:00</div>
-                        <div class="activity-title">🏨 民雄住宿 Check-in</div>
-                        <div class="activity-details">621 嘉義縣民雄鄉66-37號</div>
-                        <div class="duration-tag">車程40分鐘</div>
+                        <div class="time-badge">15:00</div>
+                        <div class="activity-title">🍹 健康鮮果屋</div>
+                        <div class="activity-details">品嚐新鮮果汁與健康飲品</div>
                     </div>
                     
                     <div class="timeline-item">
-                        <div class="time-badge">15:30 - 17:30</div>
-                        <div class="activity-title">🏮 檜意森活村</div>
+                        <div class="time-badge">15:30</div>
+                        <div class="activity-title">🏮 檜意生活村</div>
                         <div class="activity-details">漫步日式建築群，感受歷史氛圍</div>
-                        <div class="duration-tag">車程30分鐘</div>
+                        <div class="transport-info">
+                            <strong>特色：</strong>日式建築群，適合拍照打卡
+                        </div>
                     </div>
                     
                     <div class="timeline-item">
-                        <div class="time-badge">18:00 - 20:00</div>
-                        <div class="activity-title">🍜 文化路夜市</div>
-                        <div class="activity-details">品嚐嘉義在地美食，感受夜市熱鬧氛圍</div>
+                        <div class="time-badge">17:00</div>
+                        <div class="activity-title">🏨 回民宿 (躺平青旅)</div>
+                        <div class="activity-details">Check-in 休息</div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="time-badge">18:00</div>
+                        <div class="activity-title">🛒 嘉樂福夜市</div>
+                        <div class="activity-details">逛嘉樂福夜市，品嚐在地美食</div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="time-badge">20:00</div>
+                        <div class="activity-title">🍜 文化夜市</div>
+                        <div class="activity-details">嘉義最著名的文化路夜市</div>
                         <div class="restaurant-highlight">
-                            推薦美食：雞肉飯、方塊酥、豆花
+                            推薦美食：雞肉飯、方塊酥、豆花、火雞肉飯
                         </div>
                     </div>
                 </div>
                 
-                <!-- 第一天地圖導航 -->
-                <div style="margin-top: 25px; text-align: center;">
-                    <a href="https://maps.app.goo.gl/2KQsxgLZDEeEf3nU7" target="_blank" class="map-button">
-                        🗺️ 第一天導航路線<small>嘉義探索之旅</small>
-                    </a>
-                </div>
             </div>
 
             <!-- Day 2 -->
             <div class="day-card" id="day2">
                 <div class="day-header">
                     <h3 class="day-title">第二天</h3>
-                    <p class="day-summary">轉戰雲林冒險</p>
+                    <p class="day-summary">嘉義到雲林</p>
                 </div>
                 <div class="timeline">
                     <div class="timeline-item">
-                        <div class="time-badge">08:00 - 08:30</div>
-                        <div class="activity-title">🚗 還車 & 轉換交通</div>
-                        <div class="activity-details">民雄 → 嘉義高鐵站還車</div>
-                        <div class="duration-tag">車程25分鐘</div>
+                        <div class="time-badge">11:30</div>
+                        <div class="activity-title">🏨 退房</div>
+                        <div class="activity-details">從躺平青旅退房</div>
                     </div>
                     
                     <div class="timeline-item">
-                        <div class="time-badge">08:30 - 09:20</div>
-                        <div class="activity-title">🚆 前往雲林斗六</div>
-                        <div class="activity-details">嘉義 → 斗六成功路102號</div>
-                        <div class="transport-info">
-                            <strong>建議：</strong>搭區間車約40分鐘，或朋友接送
+                        <div class="time-badge">12:30</div>
+                        <div class="activity-title">🍗 阿溪雞肉飯</div>
+                        <div class="activity-details">品嚐嘉義知名雞肉飯</div>
+                        <div class="restaurant-highlight">
+                            推薦：雞肉飯、滷肉飯，嘉義必吃美食
                         </div>
                     </div>
                     
                     <div class="timeline-item">
-                        <div class="time-badge">09:30</div>
-                        <div class="activity-title">🔑 取車開始雲林之旅</div>
-                        <div class="activity-details">在成功路102號取朋友車輛</div>
-                    </div>
-                    
-                    <div class="timeline-item">
-                        <div class="time-badge">10:00 - 11:30</div>
-                        <div class="activity-title">🌈 五年千歲公園</div>
-                        <div class="activity-details">褒忠鄉 - 探索迷宮造景與彩虹拱橋</div>
+                        <div class="time-badge">14:00</div>
+                        <div class="activity-title">🚆 新自強號前往雲林</div>
+                        <div class="activity-details">搭乘新自強號前往雲林</div>
                         <div class="transport-info">
-                            <strong>體力需求：</strong>中度，有階梯與步道<br>
-                            <strong>建議：</strong>穿好走的鞋，備水防曬
+                            <strong>交通：</strong>新自強號，快速舒適
                         </div>
-                        <div class="duration-tag">車程30分鐘</div>
                     </div>
                     
                     <div class="timeline-item">
-                        <div class="time-badge">12:10 - 14:00</div>
-                        <div class="activity-title">🐄 千巧谷牛樂園牧場</div>
-                        <div class="activity-details">崙背鄉 - 與可愛牛隻互動，品嚐新鮮乳製品</div>
+                        <div class="time-badge">14:30</div>
+                        <div class="activity-title">📸 拍貼機</div>
+                        <div class="activity-details">體驗拍貼機，留下美好回憶</div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="time-badge">15:00</div>
+                        <div class="activity-title">🏍️ 找信智拿機車</div>
+                        <div class="activity-details">與信智會合，取得機車</div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="time-badge">15:30</div>
+                        <div class="activity-title">🏨 回民宿</div>
+                        <div class="activity-details">回到雲林住宿地點休息</div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="time-badge">17:00</div>
+                        <div class="activity-title">🐄 千巧谷牛牧場</div>
+                        <div class="activity-details">與可愛牛隻互動，品嚐新鮮乳製品</div>
                         <div class="restaurant-highlight">
                             特色：新鮮牛奶、手工甜點、伴手禮採購
                         </div>
-                        <div class="duration-tag">車程30-40分鐘</div>
                     </div>
                     
                     <div class="timeline-item">
-                        <div class="time-badge">15:00 - 17:30</div>
-                        <div class="activity-title">☕ 斗六太平老街</div>
-                        <div class="activity-details">漫步老街，享受咖啡時光</div>
-                        <div class="duration-tag">車程35-45分鐘</div>
-                    </div>
-                    
-                    <div class="timeline-item">
-                        <div class="time-badge">18:00</div>
-                        <div class="activity-title">🏨 斗六住宿 & 晚餐</div>
-                        <div class="activity-details">64054 雲林縣斗六市府文路121號</div>
+                        <div class="time-badge">19:50</div>
+                        <div class="activity-title">🍣 吃壽司郎</div>
+                        <div class="activity-details">品嚐迴轉壽司，享受日式料理</div>
+                        <div class="restaurant-highlight">
+                            推薦：新鮮壽司、日式料理
+                        </div>
                     </div>
                 </div>
                 
-                <!-- 第二天地圖導航 -->
-                <div style="margin-top: 25px; text-align: center;">
-                    <a href="https://maps.app.goo.gl/jPhrWR6q8A4H1YUM7" target="_blank" class="map-button">
-                        🗺️ 第二天導航路線<small>轉戰雲林冒險</small>
-                    </a>
-                </div>
             </div>
 
             <!-- Day 3 -->
             <div class="day-card" id="day3">
                 <div class="day-header">
                     <h3 class="day-title">第三天</h3>
-                    <p class="day-summary">虎尾美食與古蹟巡禮</p>
+                    <p class="day-summary">雲林美食與咖啡時光</p>
                 </div>
                 <div class="timeline">
                     <div class="timeline-item">
-                        <div class="time-badge">07:00</div>
-                        <div class="activity-title">🌅 早起出發</div>
-                        <div class="activity-details">從斗六前往虎尾</div>
-                        <div class="duration-tag">車程20-25分鐘</div>
+                        <div class="time-badge">12:30</div>
+                        <div class="activity-title">🏨 退房</div>
+                        <div class="activity-details">從雲林民宿退房</div>
                     </div>
                     
                     <div class="timeline-item">
-                        <div class="time-badge">07:30 - 08:00</div>
-                        <div class="activity-title">🍖 兩撇（兩丿）爌肉飯</div>
-                        <div class="activity-details">虎尾公安路41號 - 品嚐道地台灣早餐</div>
+                        <div class="time-badge">13:00</div>
+                        <div class="activity-title">🍖 色鼎燒烤</div>
+                        <div class="activity-details">品嚐美味燒烤料理</div>
                         <div class="restaurant-highlight">
-                            <strong>營業時間：</strong>06:00-10:00<br>
-                            <strong>特色：</strong>傳統爌肉飯，建議早到避免售罄
+                            推薦：各式燒烤、肉類料理
                         </div>
                     </div>
                     
                     <div class="timeline-item">
-                        <div class="time-badge">08:10 - 08:50</div>
-                        <div class="activity-title">🌉 虎尾鐵橋</div>
-                        <div class="activity-details">縣定古蹟巡禮，晨光攝影絕佳時機</div>
+                        <div class="time-badge">16:00</div>
+                        <div class="activity-title">🚗 前往雲頂咖啡</div>
+                        <div class="activity-details">前往雲頂咖啡廳</div>
+                        <div class="duration-tag">車程約30分鐘</div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="time-badge">16:30</div>
+                        <div class="activity-title">☕ 雲頂咖啡</div>
+                        <div class="activity-details">享受咖啡時光，欣賞美景</div>
                         <div class="transport-info">
-                            <strong>步道：</strong>平坦好走，適合拍照<br>
-                            <strong>景點：</strong>可順遊虎尾遊客中心
+                            <strong>特色：</strong>景觀咖啡廳，適合放鬆休息
                         </div>
-                        <div class="duration-tag">步行5-10分鐘</div>
                     </div>
                     
                     <div class="timeline-item">
-                        <div class="time-badge">09:20</div>
-                        <div class="activity-title">🏁 行程圓滿結束</div>
-                        <div class="activity-details">回到斗六成功路102號交還車輛</div>
-                        <div class="duration-tag">車程25-30分鐘</div>
+                        <div class="time-badge">18:30</div>
+                        <div class="activity-title">🏍️ 前往車站還車</div>
+                        <div class="activity-details">前往車站歸還機車</div>
+                        <div class="duration-tag">車程約30分鐘</div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="time-badge">19:30</div>
+                        <div class="activity-title">🚆 坐火車回家</div>
+                        <div class="activity-details">搭乘火車返家，結束美好旅程</div>
+                        <div class="transport-info">
+                            <strong>交通：</strong>火車返程，結束三天兩夜之旅
+                        </div>
                     </div>
                 </div>
                 
-                <!-- 第三天地圖導航 -->
-                <div style="margin-top: 25px; text-align: center;">
-                    <a href="https://maps.app.goo.gl/Ce3xmx8oiAbBxNHo8" target="_blank" class="map-button">
-                        🗺️ 第三天導航路線<small>虎尾美食巡禮</small>
-                    </a>
-                </div>
             </div>
         </div>
 
@@ -839,8 +921,54 @@
             const message = document.getElementById('modal-message');
             
             if (type === 'budget') {
-                title.textContent = '💰 預算功能';
-                message.textContent = '預算計算功能開發中，敬請期待！';
+                title.textContent = '💰 旅行花費記錄';
+                message.innerHTML = `
+                    <div style="text-align: left; max-height: 60vh; overflow-y: auto; -webkit-overflow-scrolling: touch;">
+                        <h4 style="color: #667eea; margin-bottom: 15px; font-size: 1.1rem;">📊 花費統計</h4>
+                        
+                        <div style="background: #f8f9fa; padding: 12px; border-radius: 8px; margin-bottom: 12px;">
+                            <h5 style="margin: 0 0 8px 0; color: #333; font-size: 0.95rem;">🍽️ 餐飲費用</h5>
+                            <p style="margin: 3px 0; font-size: 0.8rem; word-break: break-word;">• 星巴克焙茶拿鐵：175元</p>
+                            <p style="margin: 3px 0; font-size: 0.8rem;">• 水果精力湯：80元</p>
+                            <p style="margin: 3px 0; font-size: 0.8rem;">• 涼麵+果汁：120元</p>
+                            <p style="margin: 3px 0; font-size: 0.8rem;">• 夜市嘉樂福碳烤：165元</p>
+                            <p style="margin: 3px 0; font-size: 0.8rem;">• 文化夜市地瓜球：50元</p>
+                            <p style="margin: 3px 0; font-size: 0.8rem;">• 文化夜市芭樂多多：50元</p>
+                            <p style="margin: 3px 0; font-size: 0.8rem;">• 文化夜市正宗奶綠：70元</p>
+                            <p style="margin: 3px 0; font-size: 0.8rem;">• 文化夜市魷魚：150元</p>
+                            <p style="margin: 3px 0; font-size: 0.8rem;">• 八耀：67元</p>
+                            <p style="margin: 3px 0; font-size: 0.8rem;">• 阿溪雞肉飯：165元</p>
+                            <p style="margin: 3px 0; font-size: 0.8rem;">• 千巧谷飲品：155元</p>
+                            <p style="margin: 3px 0; font-size: 0.8rem;">• 壽司郎：1090元</p>
+                            <p style="margin: 3px 0; font-size: 0.8rem;">• 色鼎燒烤：1514元</p>
+                        </div>
+                        
+                        <div style="background: #e8f4fd; padding: 12px; border-radius: 8px; margin-bottom: 12px;">
+                            <h5 style="margin: 0 0 8px 0; color: #333; font-size: 0.95rem;">🏨 住宿交通</h5>
+                            <p style="margin: 3px 0; font-size: 0.8rem;">• 躺平青旅：2817元</p>
+                            <p style="margin: 3px 0; font-size: 0.8rem;">• 租車：300元</p>
+                            <p style="margin: 3px 0; font-size: 0.8rem;">• 第一天加油：50元</p>
+                        </div>
+                        
+                        <div style="background: #fff3cd; padding: 12px; border-radius: 8px; margin-bottom: 12px;">
+                            <h5 style="margin: 0 0 8px 0; color: #333; font-size: 0.95rem;">🎯 景點門票</h5>
+                            <p style="margin: 3px 0; font-size: 0.8rem;">• 花磚博物館：200元</p>
+                            <p style="margin: 3px 0; font-size: 0.8rem;">• 拍貼機：300元</p>
+                        </div>
+                        
+                        <div style="background: #f8d7da; padding: 12px; border-radius: 8px; margin-bottom: 12px;">
+                            <h5 style="margin: 0 0 8px 0; color: #333; font-size: 0.95rem;">🛍️ 其他消費</h5>
+                            <p style="margin: 3px 0; font-size: 0.8rem;">• 7-11零食+水：70元</p>
+                            <p style="margin: 3px 0; font-size: 0.8rem;">• dimo外出殼：100元</p>
+                            <p style="margin: 3px 0; font-size: 0.8rem;">• 套套：865元</p>
+                        </div>
+                        
+                        <div style="background: linear-gradient(45deg, #667eea, #764ba2); color: white; padding: 12px; border-radius: 8px; text-align: center;">
+                            <h4 style="margin: 0 0 8px 0; font-size: 1rem;">💰 總計花費</h4>
+                            <p style="margin: 0; font-size: 1.1rem; font-weight: bold;">約 8,500 元</p>
+                        </div>
+                    </div>
+                `;
             } else if (type === 'photos') {
                 title.textContent = '📸 照片功能';
                 message.textContent = '照片上傳與相簿功能開發中，敬請期待！';
@@ -940,4 +1068,6 @@
         }
     </script>
 </body>
+</html>
+</html>
 </html>
